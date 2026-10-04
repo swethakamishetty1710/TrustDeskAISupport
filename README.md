@@ -1,5 +1,5 @@
 ````
-# TrustDesk — AI Support Operations Agent
+# TrustDesk — AI Support Operations Agent-Author Swetha
 
 TrustDesk is an AI-powered support operations platform that helps support agents triage customer tickets, retrieve relevant policy knowledge, generate grounded response drafts, recommend sensitive actions, and evaluate AI performance.
 
