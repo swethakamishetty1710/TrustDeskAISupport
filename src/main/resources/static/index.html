@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>TrustDesk</title>
+
+    <link rel="stylesheet"
+          href="style.css">
+
+</head>
+
+
+<body>
+
+<div class="app">
+
+
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                T
+            </div>
+
+            <div>
+
+                <h2>
+                    TrustDesk
+                </h2>
+
+                <span>
+                    AI Support Operations
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <nav>
+
+            <button
+                    class="nav-item active"
+                    onclick="showSection('tickets')">
+
+                🎫 Tickets
+
+            </button>
+
+
+            <button
+                    class="nav-item"
+                    onclick="showSection('create')">
+
+                ＋ New Ticket
+
+            </button>
+
+
+            <button
+                    class="nav-item"
+                    onclick="showSection('evaluations')">
+
+                📊 Evaluations
+
+            </button>
+
+        </nav>
+
+    </aside>
+
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
+
+    <main class="main">
+
+
+        <!-- =========================
+             HEADER
+        ========================== -->
+
+        <header class="topbar">
+
+            <div>
+
+                <h1 id="pageTitle">
+                    Support Tickets
+                </h1>
+
+                <p id="pageSubtitle">
+                    Manage customer support cases with AI assistance
+                </p>
+
+            </div>
+
+
+            <button
+                    class="primary-button"
+                    onclick="showSection('create')">
+
+                + New Ticket
+
+            </button>
+
+        </header>
+
+
+
+        <!-- =========================
+             TICKETS
+        ========================== -->
+
+        <section
+                id="tickets"
+                class="section active">
+
+            <div class="card">
+
+                <div class="card-header">
+
+                    <div>
+
+                        <h2>
+                            Tickets
+                        </h2>
+
+                        <p>
+                            Select a ticket to review and run AI workflows.
+                        </p>
+
+                    </div>
+
+
+                    <button
+                            class="secondary-button"
+                            onclick="loadTickets()">
+
+                        Refresh
+
+                    </button>
+
+                </div>
+
+
+                <div
+                        id="ticketList"
+                        class="ticket-list">
+
+                    <div class="loading">
+                        Loading tickets...
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             CREATE TICKET
+        ========================== -->
+
+        <section
+                id="create"
+                class="section">
+
+            <div class="card create-card">
+
+                <div class="card-header">
+
+                    <div>
+
+                        <h2>
+                            Create New Ticket
+                        </h2>
+
+                        <p>
+                            Open a support case for a customer.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <form id="ticketForm">
+
+
+                    <div class="form-grid">
+
+
+                        <!-- Customer -->
+
+                        <div class="form-group">
+
+                            <label for="customer">
+                                Customer *
+                            </label>
+
+
+                            <select
+                                    id="customer"
+                                    required>
+
+                                <option value="">
+                                    Select customer
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+
+                        <!-- Order -->
+
+                        <div class="form-group">
+
+                            <label for="order">
+                                Order
+                            </label>
+
+
+                            <select id="order">
+
+                                <option value="">
+                                    No order / Not applicable
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+
+                        <!-- Channel -->
+
+                        <div class="form-group">
+
+                            <label for="channel">
+                                Channel *
+                            </label>
+
+
+                            <select
+                                    id="channel"
+                                    required>
+
+                                <option value="chat">
+                                    Chat
+                                </option>
+
+                                <option value="email">
+                                    Email
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+
+                        <!-- Subject -->
+
+                        <div class="form-group">
+
+                            <label for="subject">
+                                Subject *
+                            </label>
+
+
+                            <input
+                                    id="subject"
+                                    type="text"
+                                    placeholder="Enter ticket subject"
+                                    required>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Customer message -->
+
+                    <div class="form-group">
+
+                        <label for="body">
+                            Customer Message *
+                        </label>
+
+
+                        <textarea
+                                id="body"
+                                rows="7"
+                                placeholder="Enter the customer's message..."
+                                required></textarea>
+
+                    </div>
+
+
+
+                    <!-- Create message -->
+
+                    <div
+                            id="createMessage"
+                            class="message">
+                    </div>
+
+
+
+                    <!-- Form buttons -->
+
+                    <div class="form-actions">
+
+
+                        <button
+                                type="button"
+                                class="secondary-button"
+                                onclick="showSection('tickets')">
+
+                            Cancel
+
+                        </button>
+
+
+                        <button
+                                type="submit"
+                                class="primary-button">
+
+                            Create Ticket
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             TICKET DETAIL
+        ========================== -->
+
+        <section
+                id="ticketDetail"
+                class="section">
+
+            <div class="card">
+
+
+                <!-- Detail header -->
+
+                <div class="card-header">
+
+                    <div>
+
+                        <h2 id="detailSubject">
+                            Ticket Details
+                        </h2>
+
+
+                        <p id="detailTicketId">
+                        </p>
+
+                    </div>
+
+
+                    <button
+                            class="secondary-button"
+                            onclick="showSection('tickets')">
+
+                        ← Back to Tickets
+
+                    </button>
+
+                </div>
+
+
+
+                <!-- Ticket information -->
+
+                <div class="detail-grid">
+
+
+                    <!-- Customer -->
+
+                    <div class="detail-item">
+
+                        <span class="detail-label">
+                            Customer
+                        </span>
+
+
+                        <span id="detailCustomer">
+                            -
+                        </span>
+
+                    </div>
+
+
+
+                    <!-- Order -->
+
+                    <div class="detail-item">
+
+                        <span class="detail-label">
+                            Order
+                        </span>
+
+
+                        <span id="detailOrder">
+                            -
+                        </span>
+
+                    </div>
+
+
+
+                    <!-- Channel -->
+
+                    <div class="detail-item">
+
+                        <span class="detail-label">
+                            Channel
+                        </span>
+
+
+                        <span id="detailChannel">
+                            -
+                        </span>
+
+                    </div>
+
+
+
+                    <!-- Status -->
+
+                    <div class="detail-item">
+
+                        <span class="detail-label">
+                            Status
+                        </span>
+
+
+                        <span id="detailStatus">
+                            -
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Customer message -->
+
+                <div class="detail-message">
+
+                    <h3>
+                        Customer Message
+                    </h3>
+
+
+                    <div
+                            id="detailBody"
+                            class="customer-message">
+
+                        Loading...
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- AI actions -->
+
+                <div class="ai-actions">
+
+                    <h3>
+                        AI Support Actions
+                    </h3>
+
+
+                    <button
+                            class="primary-button"
+                            onclick="runTriage()">
+
+                        🤖 Run AI Triage
+
+                    </button>
+
+                </div>
+
+
+
+                <!-- AI result -->
+
+                <div
+                        id="triageResult"
+                        class="ai-result">
+
+                </div>
+
+            </div>
+            <div id="sensitiveActionResult" class="sensitive-action-container"></div>
+
+        </section>
+
+
+
+        <!-- =========================
+             EVALUATIONS
+        ========================== -->
+
+        <section
+                id="evaluations"
+                class="section">
+
+            <div class="card">
+
+                <div class="card-header">
+
+                    <div>
+                        <h2>
+                            Evaluation Results
+                        </h2>
+
+                        <p>
+                            Run the TrustDesk evaluation cases and review
+                            AI quality and guardrail results.
+                        </p>
+                    </div>
+
+                    <button
+                            id="runEvaluationButton"
+                            class="primary-button"
+                            onclick="runEvaluation()">
+
+                        ▶ Run Evaluation
+
+                    </button>
+
+                </div>
+
+
+                <!-- Evaluation Status -->
+
+                <div
+                        id="evaluationStatus"
+                        class="message">
+
+                </div>
+
+
+                <!-- Summary -->
+
+                <div
+                        id="evaluationSummary"
+                        class="evaluation-summary">
+
+                </div>
+
+
+                <!-- Case Results -->
+
+                <div
+                        id="evaluationResults"
+                        class="evaluation-results">
+
+                </div>
+
+            </div>
+
+        </section>
+    </main>
+
+</div>
+
+
+
+<!-- JavaScript -->
+
+<script src="app.js"></script>
+
+
+</body>
+
+</html>
